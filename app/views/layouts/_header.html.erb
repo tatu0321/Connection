@@ -1,0 +1,39 @@
+<!-- app/views/layouts/_header.html.erb -->
+<header class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container">
+    <%= link_to "Connection", root_path, class: "navbar-brand" %>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <% if user_signed_in? %>
+          <!-- ログイン後のリンク -->
+          <li class="nav-item">
+            <%= link_to "マイページ", profile_path, class: "nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "新規投稿", new_public_post_path, class: "nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "About", about_path, class: "nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Log out", destroy_user_session_path, method: :delete, class: "nav-link" %>
+          </li>
+        <% else %>
+          <!-- サインイン前のリンク -->
+          <li class="nav-item">
+            <%= link_to "Sign up", new_user_registration_path, class: "nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Sign in", new_user_session_path, class: "nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "About", about_path, class: "nav-link" %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</header>
