@@ -1,0 +1,21 @@
+<h1 class="text-center">投稿一覧</h1>
+
+<div class="container">
+  <% @posts.each do |post| %>
+    <div class="card mb-3">
+      <div class="card-body d-flex">
+        <!-- プロフィール画像のプレースホルダー -->
+        <img src="https://via.placeholder.com/50" class="rounded-circle mr-3" alt="User Icon">
+
+        <!-- 投稿内容 -->
+        <div>
+          <h5 class="card-title mb-1"><%= post.user.name %></h5>
+          <p class="card-text text-muted" style="font-size: 0.9em;">
+            <%= post.created_at.strftime("%Y-%m-%d %H:%M") %>
+          </p>
+          <p class="card-text"><%= post.content %></p>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

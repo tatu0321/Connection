@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
+
   scope module: :public do
+    resources :posts, only: [:index]
     root "homes#top"
     get "about" => "homes#about"
   end
