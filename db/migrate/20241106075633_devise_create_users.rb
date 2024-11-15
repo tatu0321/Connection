@@ -34,7 +34,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[6.1]
 
       ## 名前を保存するカラム
       t.string :name, null: false
-      t.boolean :is_active, null: false
+      t.boolean :is_active, default: true, null: false
 
       t.timestamps null: false
     end
