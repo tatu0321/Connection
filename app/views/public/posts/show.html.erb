@@ -1,0 +1,18 @@
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <div class="card">
+        <div class="card-header">
+          <h4>投稿詳細</h4>
+        </div>
+        <div class="card-body">
+          <p><strong>内容:</strong></p>
+          <p><%= @post.content %></p>
+          <hr>
+          <p class="text-muted">投稿日: <%= @post.created_at.strftime("%Y-%m-%d %H:%M") %></p>
+          <%= link_to "投稿一覧に戻る", posts_path, class: "btn btn-secondary" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

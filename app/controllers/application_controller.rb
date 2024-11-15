@@ -5,12 +5,12 @@ class ApplicationController < ActionController::Base
     if resource.is_a?(Admin)
       admin_dashboard_path # 管理者用ダッシュボードページへリダイレクト
     else
-      authenticated_root_path # ユーザーのマイページへリダイレクト
+      mypage_path # ユーザーのマイページへリダイレクト
     end
   end
 
   def after_sign_out_path_for(resource_or_scope)
-    unauthenticated_root_path # サインアウト後は未ログイン時のトップページ
+    about_path # サインアウト後は未ログイン時のトップページ
   end
 
   protected
