@@ -1,0 +1,33 @@
+<h2>プロフィール編集</h2>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { multipart: true }) do |f| %>
+  <%= render "public/users/shared/error_messages", resource: resource %>
+
+  <!-- プロフィール画像のアップロード -->
+  <div class="field">
+    <% if resource.avatar.attached? %>
+      <%= image_tag resource.avatar, class: "profile-image", size: "150x150" %>
+    <% else %>
+      <%= image_tag "no_image.jpg", class: "profile-image", size: "150x150" %>
+    <% end %>
+    <%= f.label :avatar, "プロフィール画像" %><br>
+    <%= f.file_field :avatar %>
+  </div>
+
+
+  <!-- ユーザー名の編集 -->
+  <div class="field">
+    <%= f.label :name, "ユーザー名" %><br>
+    <%= f.text_field :name %>
+  </div>
+
+  <!-- 自己紹介の編集 -->
+  <div class="field">
+    <%= f.label :introduction, "自己紹介" %><br>
+    <%= f.text_area :introduction, rows: 5 %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "保存", class: "btn btn-primary" %>
+  </div>
+<% end %>

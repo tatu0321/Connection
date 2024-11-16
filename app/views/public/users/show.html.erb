@@ -1,30 +1,39 @@
-<div class="container mt-4">
+<div class="container mypage-container">
   <div class="row">
-    <!-- 左カラム: 会員情報 -->
+    <!-- 左側のユーザー情報 -->
     <div class="col-md-4">
-      <div class="card">
-        <div class="card-header">
-          会員情報
-        </div>
-        <div class="card-body">
-          <p><strong>名前:</strong> <%= @user.name %></p>
-          <p><strong>メールアドレス:</strong> <%= @user.email %></p>
-          <p><strong>登録日:</strong> <%= @user.created_at.strftime("%Y-%m-%d") %></p>
+      <div class="card user-info">
+        <div class="card-body text-center">
+          <% if @user.avatar.attached? %>
+            <%= image_tag @user.avatar, class: "profile-image img-fluid rounded-circle mb-3", size: "150x150" %>
+          <% else %>
+            <%= image_tag "no_image.jpg", class: "profile-image img-fluid rounded-circle mb-3", size: "150x150" %>
+          <% end %>
+          <h3 class="card-title"><%= @user.name %></h3>
+          <p class="card-text text-muted"><%= @user.introduction.presence || "自己紹介はまだ登録されていません。" %></p>
+
         </div>
       </div>
     </div>
 
-    <!-- 右カラム: 投稿一覧 -->
+    <!-- 右側の投稿一覧 -->
     <div class="col-md-8">
-      <h3>投稿一覧</h3>
-      <ul class="list-group">
+      <% if @posts.any? %>
         <% @posts.each do |post| %>
-          <li class="list-group-item">
-            <%= link_to truncate(post.content, length: 50), post_path(post), class: "text-decoration-none" %>
-            <small class="text-muted d-block">投稿日時: <%= post.created_at.strftime("%Y-%m-%d %H:%M") %></small>
-          </li>
+          <div class="card post-card mb-3">
+            <div class="card-body">
+              <p class="card-text"><%= post.content %></p>
+              <small class="text-muted">
+                投稿日時: <%= post.created_at.strftime("%Y-%m-%d %H:%M") %>
+              </small>
+            </div>
+          </div>
         <% end %>
-      </ul>
+      <% else %>
+        <div class="alert alert-info" role="alert">
+          投稿がまだありません。
+        </div>
+      <% end %>
     </div>
   </div>
 </div>

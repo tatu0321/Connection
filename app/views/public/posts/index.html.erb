@@ -1,21 +1,29 @@
 <h1 class="text-center">投稿一覧</h1>
 
-<div class="container">
-  <% @posts.each do |post| %>
-    <div class="card mb-3">
-      <div class="card-body d-flex">
-        <!-- プロフィール画像のプレースホルダー -->
-        <img src="https://via.placeholder.com/50" class="rounded-circle mr-3" alt="User Icon">
-
-        <!-- 投稿内容 -->
-        <div>
-          <h5 class="card-title mb-1"><%= post.user.name %></h5>
-          <p class="card-text text-muted" style="font-size: 0.9em;">
-            <%= post.created_at.strftime("%Y-%m-%d %H:%M") %>
-          </p>
-          <p class="card-text"><%= post.content %></p>
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <!-- 投稿一覧を中央に寄せる -->
+    <div class="col-md-8">
+      <% @posts.each do |post| %>
+        <div class="card mb-4">
+          <div class="card-header d-flex align-items-center">
+            <!-- 投稿者の情報 -->
+            <%= image_tag(post.user.avatar.attached? ? post.user.avatar : 'no_image.jpg', class: 'rounded-circle me-3', size: '40x40') %>
+            <div>
+              <h5 class="mb-0"><%= post.user.name %></h5>
+              <small class="text-muted">@<%= post.user.name %></small>
+            </div>
+          </div>
+          <div class="card-body">
+            <!-- 投稿内容 -->
+            <p><%= post.content %></p>
+          </div>
+          <div class="card-footer text-muted">
+            投稿日時: <%= post.created_at.strftime("%Y-%m-%d %H:%M") %>
+          </div>
         </div>
-      </div>
+      <% end %>
     </div>
-  <% end %>
+  </div>
 </div>
+
