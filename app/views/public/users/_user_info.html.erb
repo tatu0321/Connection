@@ -1,0 +1,11 @@
+<div class="card user-info">
+  <div class="card-body text-center">
+    <% if user.avatar.attached? %>
+      <%= image_tag user.avatar, class: "profile-image img-fluid rounded-circle mb-3", size: "150x150" %>
+    <% else %>
+      <%= image_tag "no_image.jpg", class: "profile-image img-fluid rounded-circle mb-3", size: "150x150" %>
+    <% end %>
+    <h3 class="card-title"><%= user.name %></h3>
+    <p class="card-text text-muted"><%= user.introduction.presence || "自己紹介はまだ登録されていません。" %></p>
+  </div>
+</div>

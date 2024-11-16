@@ -1,5 +1,5 @@
 <!-- app/views/layouts/_header.html.erb -->
-<header class="navbar navbar-expand-lg navbar-light bg-light mb-5">
+<header class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container">
     <% if user_signed_in? %>
       <%= link_to "Connection", posts_path %> <!-- 投稿一覧ページへのリンク -->
@@ -13,6 +13,9 @@
       <ul class="navbar-nav ml-auto">
         <% if user_signed_in? %>
           <!-- ログイン後のリンク -->
+          <li class="nav-item">
+            <%= link_to "ホーム", posts_path, class: "nav-link" %>
+          </li>
           <li class="nav-item">
             <%= link_to "マイページ", mypage_path, class: "nav-link" %>
           </li>
@@ -28,6 +31,9 @@
           
         <% else %>
           <!-- サインイン前のリンク -->
+          <li class="nav-item">
+            <%= link_to "ホーム", root_path, class: "nav-link" %>
+          </li>
           <li class="nav-item">
             <%= link_to "Sign up", new_user_registration_path, class: "nav-link" %>
           </li>

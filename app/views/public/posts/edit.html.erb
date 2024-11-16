@@ -1,0 +1,25 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h3 class="mb-3">投稿を編集</h3>
+          
+          <!-- 投稿編集フォーム -->
+          <%= form_with model: @post, url: post_path(@post), method: :patch, local: true do |f| %>
+            <div class="mb-3">
+              <%= f.label :content, "投稿内容", class: "form-label" %>
+              <%= f.text_area :content, class: "form-control", rows: 5, placeholder: "投稿内容を入力してください" %>
+            </div>
+
+            <div class="d-flex justify-content-between">
+              <%= link_to "キャンセル", post_path(@post), class: "btn btn-outline-secondary" %>
+              <%= f.submit "更新する", class: "btn btn-primary" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

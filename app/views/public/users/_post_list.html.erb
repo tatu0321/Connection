@@ -1,0 +1,18 @@
+<div class="col-md-8">
+  <% if posts.any? %>
+    <% posts.each do |post| %>
+      <div class="card post-card mb-3">
+        <div class="card-body">
+          <%= link_to truncate(post.content, length: 100), post_path(post), class: "text-dark text-decoration-none" %>
+          <div class="text-muted text-end">
+            投稿日時: <%= post.created_at.strftime("%Y-%m-%d %H:%M") %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  <% else %>
+    <div class="alert alert-info" role="alert">
+      投稿がまだありません。
+    </div>
+  <% end %>
+</div>

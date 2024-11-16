@@ -1,29 +1,36 @@
-<h1 class="text-center">投稿一覧</h1>
-
 <div class="container my-5">
   <div class="row justify-content-center">
-    <!-- 投稿一覧を中央に寄せる -->
-    <div class="col-md-8">
-      <% @posts.each do |post| %>
-        <div class="card mb-4">
-          <div class="card-header d-flex align-items-center">
-            <!-- 投稿者の情報 -->
-            <%= image_tag(post.user.avatar.attached? ? post.user.avatar : 'no_image.jpg', class: 'rounded-circle me-3', size: '40x40') %>
-            <div>
-              <h5 class="mb-0"><%= post.user.name %></h5>
-              <small class="text-muted">@<%= post.user.name %></small>
+    <div class="col-md-8 col-12">
+      <% if @posts.any? %>
+        <% @posts.each do |post| %>
+          <div class="card mb-4 shadow-sm">
+            <div class="card-header d-flex align-items-center">
+              <%= link_to image_tag(post.user.avatar.attached? ? post.user.avatar : 'no_image.jpg',
+                                    class: 'rounded-circle me-3', size: '40x40'), 
+                          post.user == current_user ? mypage_path : user_path(post.user) %>
+              <div>
+                <h5 class="mb-0">
+                  <%= link_to post.user.name, post.user == current_user ? mypage_path : user_path(post.user), 
+                              class: "text-decoration-none text-dark" %>
+                </h5>
+                <small class="text-muted">@<%= post.user.name %></small>
+              </div>
+            </div>
+            <div class="card-body">
+              <%= link_to post_path(post), class: "text-dark text-decoration-none", title: post.content do %>
+                <%= truncate(post.content, length: 100) %>
+              <% end %>
+            </div>
+            <div class="card-footer text-muted text-end">
+              投稿日時: <%= post.created_at.strftime("%Y-%m-%d %H:%M") %>
             </div>
           </div>
-          <div class="card-body">
-            <!-- 投稿内容 -->
-            <p><%= post.content %></p>
-          </div>
-          <div class="card-footer text-muted">
-            投稿日時: <%= post.created_at.strftime("%Y-%m-%d %H:%M") %>
-          </div>
+        <% end %>
+      <% else %>
+        <div class="alert alert-info text-center">
+          投稿がまだありません。
         </div>
       <% end %>
     </div>
   </div>
 </div>
-

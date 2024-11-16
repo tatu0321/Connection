@@ -1,17 +1,25 @@
-<div class="container mt-4">
-  <div class="row">
-    <div class="col-md-8 offset-md-2">
-      <div class="card">
-        <div class="card-header">
-          <h4>投稿詳細</h4>
-        </div>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow-sm">
         <div class="card-body">
-          <p><strong>内容:</strong></p>
-          <p><%= @post.content %></p>
-          <hr>
-          <p class="text-muted">投稿日: <%= @post.created_at.strftime("%Y-%m-%d %H:%M") %></p>
-          <%= link_to "投稿一覧に戻る", posts_path, class: "btn btn-secondary" %>
+          <!-- 投稿の内容 -->
+          <h3 class="mb-3">投稿詳細</h3>
+          <p class="mb-4"><%= @post.content %></p>
+          <small class="text-muted">投稿日: <%= @post.created_at.strftime("%Y-%m-%d %H:%M") %></small>
         </div>
+
+        <% if @post.user == current_user %>
+          <div class="card-footer d-flex justify-content-end">
+            <!-- 編集ボタン -->
+            <%= link_to "編集する", edit_post_path(@post), class: "btn btn-outline-primary me-2 mr-3" %>
+            <!-- 削除ボタン -->
+            <%= link_to "削除", post_path(@post), 
+                        method: :delete, 
+                        data: { confirm: "本当に削除しますか？" }, 
+                        class: "btn btn-outline-danger" %>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>
