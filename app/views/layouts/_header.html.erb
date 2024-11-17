@@ -1,5 +1,4 @@
-<!-- app/views/layouts/_header.html.erb -->
-<header class="navbar navbar-expand-lg navbar-light bg-light">
+<header class="navbar navbar-expand-lg" style="background-color: #53c7ea;">
   <div class="container">
     <% if user_signed_in? %>
       <%= link_to "Connection", posts_path %> <!-- 投稿一覧ページへのリンク -->
@@ -14,34 +13,34 @@
         <% if user_signed_in? %>
           <!-- ログイン後のリンク -->
           <li class="nav-item">
-            <%= link_to "ホーム", posts_path, class: "nav-link" %>
+            <%= link_to "ホーム", posts_path, class: "nav-link btn btn-outline-secondary btn-sm mx-3 text-white border-white" %>
           </li>
           <li class="nav-item">
-            <%= link_to "マイページ", mypage_path, class: "nav-link" %>
+            <%= link_to "マイページ", mypage_path, class: "nav-link btn btn-outline-secondary btn-sm mx-3 text-white border-white" %>
           </li>
           <li class="nav-item">
-            <%= link_to "新規投稿", new_post_path, class: "nav-link" %>
+            <%= link_to "新規投稿", new_post_path, class: "nav-link btn btn-outline-secondary btn-sm mx-3 text-white border-white" %>
           </li>
           <li class="nav-item">
-            <%= link_to "About", about_path, class: "nav-link" %>
+            <%= link_to "About", about_path, class: "nav-link btn btn-outline-secondary btn-sm mx-3 text-white border-white" %>
           </li>
           <li class="nav-item">
-            <%= link_to "Log out", destroy_user_session_path, method: :get, class: "nav-link" %>
+            <%= link_to "Log out", destroy_user_session_path, method: :get, class: "nav-link btn btn-outline-secondary btn-sm mx-3 text-white border-white" %>
           </li>
           
         <% else %>
           <!-- サインイン前のリンク -->
           <li class="nav-item">
-            <%= link_to "ホーム", root_path, class: "nav-link" %>
+            <%= link_to "ホーム", root_path, class: "nav-link btn btn-outline-secondary btn-sm mx-3 text-white border-white" %>
           </li>
           <li class="nav-item">
-            <%= link_to "Sign up", new_user_registration_path, class: "nav-link" %>
+            <%= link_to "Sign up", new_user_registration_path, class: "nav-link btn btn-outline-secondary btn-sm mx-3 text-white border-white" %>
           </li>
           <li class="nav-item">
-            <%= link_to "Sign in", new_user_session_path, class: "nav-link" %>
+            <%= link_to "Sign in", new_user_session_path, class: "nav-link btn btn-outline-secondary btn-sm mx-3 text-white border-white" %>
           </li>
           <li class="nav-item">
-            <%= link_to "About", about_path, class: "nav-link" %>
+            <%= link_to "About", about_path, class: "nav-link btn btn-outline-secondary btn-sm mx-3 text-white border-white" %>
           </li>
         <% end %>
       </ul>

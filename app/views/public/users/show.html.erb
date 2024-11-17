@@ -6,6 +6,10 @@
 
       <% if @is_current_user %>
         <%= link_to "プロフィール編集", edit_user_path(current_user), class: "btn btn-primary mt-3 w-100" %>
+        <%= button_to "退会する", user_path(current_user), 
+              method: :delete, 
+              data: { confirm: "本当に退会しますか？" }, 
+              class: "btn btn-danger mt-3 w-100" %>
       <% end %>
     </div>
 

@@ -1,11 +1,26 @@
-<div class="card user-info">
+<div class="card user-info shadow-sm my-4">
   <div class="card-body text-center">
+    <!-- プロフィール画像 -->
     <% if user.avatar.attached? %>
-      <%= image_tag user.avatar, class: "profile-image img-fluid rounded-circle mb-3", size: "150x150" %>
+      <%= image_tag user.avatar, class: "profile-image img-fluid rounded-circle mb-3 border border-2", size: "150x150" %>
     <% else %>
-      <%= image_tag "no_image.jpg", class: "profile-image img-fluid rounded-circle mb-3", size: "150x150" %>
+      <%= image_tag "no_image.jpg", class: "profile-image img-fluid rounded-circle mb-3 border border-2", size: "150x150" %>
     <% end %>
-    <h3 class="card-title"><%= user.name %></h3>
-    <p class="card-text text-muted"><%= user.introduction.presence || "自己紹介はまだ登録されていません。" %></p>
+
+    <!-- ユーザー名 -->
+    <h3 class="card-title fw-bold"><%= user.name %></h3>
+
+    <!-- メールアドレス (current_userの場合のみ) -->
+    <% if current_user == user %>
+      <p class="card-text text-muted mt-3">
+        メールアドレス: <%= user.email %>
+      </p>
+    <% end %>
+
+    <!-- 自己紹介文 -->
+    <p class="card-text text-muted">
+      <%= user.introduction.presence || "自己紹介はまだ登録されていません。" %>
+    </p>
   </div>
 </div>
+

@@ -1,24 +1,15 @@
+<% if @user.errors.any? %>
+  <%= @user.errors.count %>件のエラーが発生しました。
+  <ul>
+    <% @user.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+<% end %>
 <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
   <div class="card p-4 shadow-sm" style="width: 100%; max-width: 500px;">
     <h3 class="text-center mb-4">プロフィール編集</h3>
-
-    <%= form_with model: current_user, url: user_registration_path, method: :put, local: true do |f| %>
-      <% if current_user.errors.any? %>
-        <div id="error_explanation" data-turbo-cache="false">
-          <h2>
-            <%= I18n.t("errors.messages.not_saved",
-                       count: current_user.errors.count,
-                       resource: current_user.class.model_name.human.downcase)
-            %>
-          </h2>
-          <ul>
-            <% current_user.errors.full_messages.each do |message| %>
-              <li><%= message %></li>
-            <% end %>
-          </ul>
-        </div>
-      <% end %>
-
+    <%= form_with model: current_user, url: user_path(current_user.id), method: :put, local: true do |f| %>
       <!-- プロフィール画像 -->
       <div class="mb-3 text-center">
         <% if current_user.avatar.attached? %>

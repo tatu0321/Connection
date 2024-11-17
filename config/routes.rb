@@ -17,7 +17,7 @@ Rails.application.routes.draw do
     get 'mypage', to: 'users#show', as: :mypage
 
     resources :posts, only: [:index, :show, :new, :create, :edit, :update, :destroy]
-    resources :users, only: [:show, :edit, :update]
+    resources :users, only: [:show, :edit, :update, :destroy]
   end
   
 end

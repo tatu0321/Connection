@@ -1,4 +1,13 @@
-<!-- app/views/public/homes/about.html.erb -->
+<% if flash[:notice] %>
+  <div class="alert alert-success">
+    <%= flash[:notice] %>
+  </div>
+<% end %>
+<% if flash[:alert] %>
+  <div class="alert alert-danger">
+    <%= flash[:alert] %>
+  </div>
+<% end %>
 
 <div class="d-flex justify-content-center align-items-center vh-100">
   <h2 class="text-center fw-bold">

@@ -3,23 +3,30 @@
     <div class="col-md-8 col-12">
       <% if @posts.any? %>
         <% @posts.each do |post| %>
-          <div class="card mb-4 shadow-sm">
+          <!-- カード全体を投稿詳細リンクに -->
+          <div class="card mb-4 shadow-sm" style="cursor: pointer;" onclick="location.href='<%= post_path(post) %>';">
             <div class="card-header d-flex align-items-center">
+              <!-- アバター（投稿者情報ページリンク） -->
               <%= link_to image_tag(post.user.avatar.attached? ? post.user.avatar : 'no_image.jpg',
-                                    class: 'rounded-circle me-3', size: '40x40'), 
-                          post.user == current_user ? mypage_path : user_path(post.user) %>
+                                    class: 'rounded-circle me-3', size: '40x40'),
+                          post.user == current_user ? mypage_path : user_path(post.user),
+                          class: "text-decoration-none",
+                          onclick: "event.stopPropagation();" %>
               <div>
+                <!-- 投稿者名（投稿者情報ページリンク） -->
                 <h5 class="mb-0">
-                  <%= link_to post.user.name, post.user == current_user ? mypage_path : user_path(post.user), 
-                              class: "text-decoration-none text-dark" %>
+                  <%= link_to post.user.name, post.user == current_user ? mypage_path : user_path(post.user),
+                              class: "text-decoration-none text-dark",
+                              onclick: "event.stopPropagation();" %>
                 </h5>
                 <small class="text-muted">@<%= post.user.name %></small>
               </div>
             </div>
             <div class="card-body">
-              <%= link_to post_path(post), class: "text-dark text-decoration-none", title: post.content do %>
+              <!-- 投稿内容（クリックで投稿詳細） -->
+              <p class="mb-0">
                 <%= truncate(post.content, length: 100) %>
-              <% end %>
+              </p>
             </div>
             <div class="card-footer text-muted text-end">
               投稿日時: <%= post.created_at.strftime("%Y-%m-%d %H:%M") %>
@@ -27,6 +34,7 @@
           </div>
         <% end %>
       <% else %>
+        <!-- 投稿が存在しない場合 -->
         <div class="alert alert-info text-center">
           投稿がまだありません。
         </div>

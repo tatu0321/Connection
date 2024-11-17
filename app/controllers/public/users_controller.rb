@@ -29,6 +29,17 @@ class Public::UsersController < ApplicationController
     end
   end
 
+  def destroy
+    if current_user.destroy  # 現在のユーザーを削除
+      flash[:notice] = "アカウントを削除しました。ご利用ありがとうございました。"
+      redirect_to about_path
+    else
+      flash[:alert] = "アカウントの削除に失敗しました。"
+      redirect_to mypage_path
+    end
+  end
+  
+
   private
 
   def user_params
