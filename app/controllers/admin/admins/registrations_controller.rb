@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Admins::RegistrationsController < Devise::RegistrationsController
+class Admin::Admins::RegistrationsController < Devise::RegistrationsController
   # before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
 
@@ -59,8 +59,4 @@ class Admins::RegistrationsController < Devise::RegistrationsController
   # def after_inactive_sign_up_path_for(resource)
   #   super(resource)
   # end
-
-  def new
-    render 'admin/admins/registrations/new'
-  end
 end
