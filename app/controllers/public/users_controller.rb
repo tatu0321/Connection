@@ -48,6 +48,13 @@ class Public::UsersController < ApplicationController
     params.require(:user).permit(:name, :introduction, :avatar, :email)
   end
 
+  def ensure_correct_user
+    # 編集対象のユーザーが現在ログイン中のユーザーと一致するかを確認
+    if params[:id].present? && params[:id].to_i != current_user.id
+      redirect_to mypage_path, alert: "他のユーザーのプロフィール編集はできません。"
+    end
+  end
+
   def ensure_guest_user
     @user = User.find(params[:id])
     if @user.email == "guest@example.com"
