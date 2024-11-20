@@ -12,6 +12,10 @@ Rails.application.routes.draw do
     registrations: 'public/users/registrations'
   }
 
+  devise_scope :user do
+    post "users/guest_sign_in", to: "public/users/sessions#guest_sign_in"
+  end
+
   scope module: :public do
     root "homes#top" # ログイン状態に応じてトップページまたはマイページへリダイレクト
     get "about", to: "homes#about"

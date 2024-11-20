@@ -31,6 +31,12 @@ module Public
         render 'public/users/sessions/new'
       end
 
+      def guest_sign_in
+        user = User.guest
+        sign_in user
+        redirect_to mypage_path, notice: "guestuserでログインしました。"
+      end
+
       private
 
       # 初期化メソッドを追加してresourceを設定
