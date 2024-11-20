@@ -25,7 +25,10 @@ Rails.application.routes.draw do
     resources :users, only: [:show, :edit, :update, :destroy]
   end
 
+  get 'searches', to: 'searches#index'
+
   namespace :admin do
     root "dashboards#index"
   end
+
 end

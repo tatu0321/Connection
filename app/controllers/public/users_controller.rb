@@ -40,7 +40,6 @@ class Public::UsersController < ApplicationController
       redirect_to mypage_path
     end
   end
-  
 
   private
 

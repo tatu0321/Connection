@@ -1,49 +1,53 @@
 <header class="navbar navbar-expand-lg" style="background-color: #53c7ea;">
-  <div class="container">
+  <div class="container-fluid">
     <% if user_signed_in? %>
-      <%= link_to "Connection", posts_path %> <!-- 投稿一覧ページへのリンク -->
+      <%= link_to "Connection", posts_path, class: "navbar-brand text-white" %> <!-- 投稿一覧ページへのリンク -->
     <% else %>
-      <%= link_to "Connection", root_path %>
+      <%= link_to "Connection", root_path, class: "navbar-brand text-white" %>
     <% end %>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ml-auto">
+      <ul class="navbar-nav ml-auto"> <!-- ms-auto で右寄せ -->
         <% if user_signed_in? %>
           <!-- ログイン後のリンク -->
           <li class="nav-item">
-            <%= link_to "ホーム", posts_path, class: "nav-link btn btn-outline-secondary btn-sm mx-3 text-white border-white" %>
+            <%= link_to "ホーム", posts_path, class: "nav-link btn btn-outline-light btn-sm mx-3 text-white border-white" %>
           </li>
           <li class="nav-item">
-            <%= link_to "マイページ", mypage_path, class: "nav-link btn btn-outline-secondary btn-sm mx-3 text-white border-white" %>
+            <%= link_to "マイページ", mypage_path, class: "nav-link btn btn-outline-light btn-sm mx-3 text-white border-white" %>
           </li>
           <li class="nav-item">
-            <%= link_to "新規投稿", new_post_path, class: "nav-link btn btn-outline-secondary btn-sm mx-3 text-white border-white" %>
+            <%= link_to "新規投稿", new_post_path, class: "nav-link btn btn-outline-light btn-sm mx-3 text-white border-white" %>
           </li>
           <li class="nav-item">
-            <%= link_to "About", about_path, class: "nav-link btn btn-outline-secondary btn-sm mx-3 text-white border-white" %>
+            <%= link_to "About", about_path, class: "nav-link btn btn-outline-light btn-sm mx-3 text-white border-white" %>
           </li>
           <li class="nav-item">
-            <%= link_to "Sign out", destroy_user_session_path, method: :get, class: "nav-link btn btn-outline-secondary btn-sm mx-3 text-white border-white" %>
+            <%= link_to "Sign out", destroy_user_session_path, method: :delete, class: "nav-link btn btn-outline-light btn-sm mx-3 text-white border-white" %>
           </li>
-          
         <% else %>
           <!-- サインイン前のリンク -->
           <li class="nav-item">
-            <%= link_to "ホーム", root_path, class: "nav-link btn btn-outline-secondary btn-sm mx-3 text-white border-white" %>
+            <%= link_to "ホーム", root_path, class: "nav-link btn btn-outline-light btn-sm mx-3 text-white border-white" %>
           </li>
           <li class="nav-item">
-            <%= link_to "Sign up", new_user_registration_path, class: "nav-link btn btn-outline-secondary btn-sm mx-3 text-white border-white" %>
+            <%= link_to "Sign up", new_user_registration_path, class: "nav-link btn btn-outline-light btn-sm mx-3 text-white border-white" %>
           </li>
           <li class="nav-item">
-            <%= link_to "Sign in", new_user_session_path, class: "nav-link btn btn-outline-secondary btn-sm mx-3 text-white border-white" %>
+            <%= link_to "Sign in", new_user_session_path, class: "nav-link btn btn-outline-light btn-sm mx-3 text-white border-white" %>
           </li>
           <li class="nav-item">
-            <%= link_to "About", about_path, class: "nav-link btn btn-outline-secondary btn-sm mx-3 text-white border-white" %>
+            <%= link_to "About", about_path, class: "nav-link btn btn-outline-light btn-sm mx-3 text-white border-white" %>
           </li>
         <% end %>
       </ul>
     </div>
+
+    <!-- 検索窓 -->
+    <form action="<%= searches_path %>" method="get" class="d-flex justify-content-center">
+      <input type="text" name="q" placeholder="検索" class="form-control me-2 w-50">
+      <button type="submit" class="btn btn-outline-light">検索</button>
+    </form>
   </div>
 </header>
+

@@ -1,0 +1,67 @@
+<h1>検索結果</h1>
+
+<div class="container my-4">
+  <div class="row">
+    <!-- 左側: ユーザー検索結果 -->
+    <div class="col-md-4 col-12 mb-4">
+      <h2 class="mb-3">ユーザー検索結果</h2>
+      <% if @users.any? %>
+        <% @users.each do |user| %>
+          <div class="card text-center mb-3">
+            <%= link_to user == current_user ? mypage_path : user_path(user) do %>
+              <%= image_tag user.avatar.attached? ? user.avatar : 'no_image.jpg',
+                            class: 'rounded-circle mt-3', size: '60x60' %>
+              <div class="card-body p-2">
+                <h6 class="card-title text-truncate mb-0"><%= user.name %></h6>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      <% else %>
+        <div class="alert alert-info text-center">
+          該当するユーザーはいませんでした。
+        </div>
+      <% end %>
+    </div>
+
+    <!-- 右側: 投稿検索結果 -->
+    <div class="col-md-8 col-12">
+      <h2 class="mb-3">投稿検索結果</h2>
+      <% if @posts.any? %>
+        <% @posts.each do |post| %>
+          <div class="card mb-4 shadow-sm" style="cursor: pointer;" onclick="location.href='<%= post_path(post) %>';">
+            <div class="card-header d-flex align-items-center">
+              <!-- アバター -->
+              <%= link_to image_tag(post.user.avatar.attached? ? post.user.avatar : 'no_image.jpg',
+                                    class: 'rounded-circle me-3', size: '40x40'),
+                          post.user == current_user ? mypage_path : user_path(post.user),
+                          class: "text-decoration-none",
+                          onclick: "event.stopPropagation();" %>
+              <div>
+                <!-- 投稿者名 -->
+                <h5 class="mb-0">
+                  <%= link_to post.user.name, post.user == current_user ? mypage_path : user_path(post.user),
+                              class: "text-decoration-none text-dark",
+                              onclick: "event.stopPropagation();" %>
+                </h5>
+              </div>
+            </div>
+            <div class="card-body">
+              <!-- 投稿内容 -->
+              <p class="mb-0">
+                <%= truncate(post.content, length: 100) %>
+              </p>
+            </div>
+            <div class="card-footer text-muted text-end">
+              投稿日時: <%= post.created_at.strftime("%Y-%m-%d %H:%M") %>
+            </div>
+          </div>
+        <% end %>
+      <% else %>
+        <div class="alert alert-info text-center">
+          該当する投稿はありませんでした。
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
