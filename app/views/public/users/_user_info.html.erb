@@ -10,8 +10,8 @@
     <!-- ユーザー名 -->
     <h3 class="card-title fw-bold"><%= user.name %></h3>
 
-    <!-- メールアドレス (current_userの場合のみ) -->
-    <% if current_user == user %>
+    <!-- メールアドレス (current_userかつゲストユーザーではない場合のみ) -->
+    <% if current_user == user && user.email != "guest@example.com" %>
       <p class="card-text text-muted mt-3">
         メールアドレス: <%= user.email %>
       </p>

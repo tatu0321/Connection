@@ -5,11 +5,21 @@
       <%= render partial: "public/users/user_info", locals: { user: @user } %>
 
       <% if @is_current_user %>
-        <%= link_to "プロフィール編集", edit_user_path(current_user), class: "btn btn-primary mt-3 w-100" %>
-        <%= button_to "退会する", user_path(current_user), 
-              method: :delete, 
-              data: { confirm: "本当に退会しますか？" }, 
+        <!-- プロフィール編集ボタン -->
+          <%= link_to edit_user_path(@user), 
+              class: "btn btn-outline-secondary w-100 mt-3 #{'disabled' if @user.email == 'guest@example.com'}" do %>
+            <i class="fas fa-user-cog"></i> プロフィール編集
+          <% end %>
+
+        <!-- 退会ボタン -->
+        <% if @user.email == 'guest@example.com' %>
+          <button class="btn btn-danger mt-3 w-100" disabled>退会する</button>
+        <% else %>
+          <%= button_to "退会する", user_path(current_user),
+              method: :delete,
+              data: { confirm: "本当に退会しますか？" },
               class: "btn btn-danger mt-3 w-100" %>
+        <% end %>
       <% end %>
     </div>
 
