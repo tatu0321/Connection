@@ -23,7 +23,7 @@
             <%= link_to "About", about_path, class: "nav-link btn btn-outline-light btn-sm mx-3 text-white border-white" %>
           </li>
           <li class="nav-item">
-            <%= link_to "Sign out", destroy_user_session_path, method: :delete, class: "nav-link btn btn-outline-light btn-sm mx-3 text-white border-white" %>
+            <%= link_to "Sign out", destroy_user_session_path, method: :get, class: "nav-link btn btn-outline-secondary btn-sm mx-3 text-white border-white" %>
           </li>
         <% else %>
           <!-- サインイン前のリンク -->

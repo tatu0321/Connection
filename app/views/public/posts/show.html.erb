@@ -1,42 +1,112 @@
 <div class="container mt-5">
   <div class="row justify-content-center">
-    <div class="col-md-8">
-      <div class="card shadow-sm">
+    <!-- 投稿詳細 -->
+    <div class="col-md-7">
+      <div class="card shadow-sm mb-4">
         <!-- 投稿者情報 -->
         <div class="card-header d-flex align-items-center">
-          <%= link_to image_tag(@post.user.avatar.attached? ? @post.user.avatar : "no_image.jpg", 
-                                class: "rounded-circle me-3", size: "40x40"), 
-                      @post.user == current_user ? mypage_path : user_path(@post.user) %>
+          <%= link_to image_tag(
+              @post.user.avatar.attached? ? @post.user.avatar : "no_image.jpg",
+              class: "rounded-circle me-3 border", size: "50x50"),
+              @post.user == current_user ? mypage_path : user_path(@post.user) %>
           <div>
             <h5 class="mb-0">
-              <%= link_to @post.user.name, 
-                          @post.user == current_user ? mypage_path : user_path(@post.user), 
+              <%= link_to @post.user.name,
+                          @post.user == current_user ? mypage_path : user_path(@post.user),
                           class: "text-decoration-none text-dark" %>
             </h5>
+            <small class="text-muted">投稿日: <%= @post.created_at.strftime("%Y-%m-%d %H:%M") %></small>
           </div>
         </div>
 
         <!-- 投稿内容 -->
         <div class="card-body">
-          <p class="mb-4"><%= @post.content %></p>
-          <small class="text-muted">投稿日: <%= @post.created_at.strftime("%Y-%m-%d %H:%M") %></small>
+          <p class="mb-4"><%= simple_format(@post.content) %></p>
         </div>
 
-        <% if @post.user == current_user %>
-          <!-- 編集・削除ボタン -->
-          <div class="card-footer d-flex justify-content-end">
-            <%= link_to "編集する", edit_post_path(@post), class: "btn btn-outline-primary me-2 mr-3" %>
-            <%= link_to "削除", post_path(@post), 
-                        method: :delete, 
-                        data: { confirm: "本当に削除しますか？" }, 
-                        class: "btn btn-outline-danger" %>
+        <!-- コメント数の表示 -->
+        <div class="card-footer d-flex justify-content-between align-items-center">
+          <div>
+            <span class="text-muted">
+              💬 <%= @post.post_comments.count %> コメント
+            </span>
           </div>
-        <% end %>
+          <% if @post.user == current_user %>
+            <div class="d-flex">
+              <%= link_to "編集する", edit_post_path(@post), class: "btn btn-outline-primary btn-sm me-2 mr-2" %>
+              <%= link_to post_path(@post),
+                  method: :delete,
+                  data: { confirm: "本当に削除しますか？" },
+                  class: "btn btn-outline-danger btn-sm" do %>
+                  削除
+              <% end %>
+            </div>
+          <% end %>
+        </div>
       </div>
-      
-      <!-- 投稿一覧へ戻るリンク -->
-      <div class="mt-3 text-center">
-        <%= link_to "投稿一覧へ戻る", posts_path, class: "btn btn-outline-secondary" %>
+
+      <!-- コメントフォーム -->
+      <div class="card shadow-sm mb-4">
+        <div class="card-body">
+          <h5 class="mb-3">コメントを投稿する</h5>
+          <div class="d-flex align-items-start">
+            <%= image_tag current_user.avatar.attached? ? current_user.avatar : "no_image.jpg",
+                          class: "rounded-circle me-3 border", size: "50x50" %>
+            <%= form_with model: [@post, @comment], local: true, class: "w-100" do |f| %>
+              <div class="form-floating mb-3">
+                <%= f.text_area :content, class: "form-control", rows: 2, placeholder: "コメントを入力してください", id: "commentContent" %>
+              </div>
+              <div class="text-end">
+                <%= f.submit "コメントを投稿", class: "btn btn-primary btn-sm" %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- コメント一覧 -->
+    <div class="col-md-5">
+      <div class="card shadow-sm">
+        <div class="card-header">
+          <h5 class="mb-0">コメント一覧</h5>
+        </div>
+        <div class="card-body">
+          <% if @post.post_comments.any? %>
+            <% @post.post_comments.each do |comment| %>
+              <!-- 各コメントをカードで囲む -->
+              <div class="card mb-3">
+                <div class="card-body">
+                  <div class="d-flex align-items-start">
+                    <%= image_tag comment.user.avatar.attached? ? comment.user.avatar : "no_image.jpg",
+                                  class: "rounded-circle me-3 border", size: "40x40" %>
+                    <div class="flex-grow-1">
+                      <div class="d-flex justify-content-between align-items-center">
+                        <strong>
+                          <%= link_to comment.user.name, user_path(comment.user), class: "text-decoration-none text-dark" %>
+                        </strong>
+                        <% if comment.user == current_user %>
+                          <div class="d-flex gap-1">
+                            <%= link_to "編集", edit_post_post_comment_path(@post, comment),
+                                        class: "btn btn-sm btn-outline-primary mr-2" %>
+                            <%= link_to "削除", post_post_comment_path(@post, comment),
+                                        method: :delete,
+                                        data: { confirm: "コメントを削除しますか？" },
+                                        class: "btn btn-sm btn-outline-danger" %>
+                          </div>
+                        <% end %>
+                      </div>
+                      <p class="mb-1"><%= comment.content %></p>
+                      <small class="text-muted"><%= time_ago_in_words(comment.created_at) %> ago</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          <% else %>
+            <p class="text-muted">まだコメントはありません。</p>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>

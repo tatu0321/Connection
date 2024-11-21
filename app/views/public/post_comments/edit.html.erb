@@ -1,0 +1,22 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow-sm">
+        <div class="card-header">
+          <h5 class="mb-0">コメントを編集する</h5>
+        </div>
+        <div class="card-body">
+          <%= form_with model: [@post, @comment], local: true do |f| %>
+            <div class="form-floating mb-3">
+              <%= f.text_area :content, class: "form-control", rows: 3, placeholder: "コメントを編集してください" %>
+            </div>
+            <div class="text-end">
+              <%= f.submit "更新する", class: "btn btn-primary" %>
+              <%= link_to "キャンセル", post_path(@post), class: "btn btn-secondary" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

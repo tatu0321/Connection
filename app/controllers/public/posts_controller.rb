@@ -3,6 +3,8 @@ class Public::PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
   before_action :correct_user, only: [:edit, :update, :destroy]
 
+  rescue_from ActiveRecord::RecordNotFound, with: :handle_record_not_found
+
   def new
     @post = current_user.posts.build
   end
@@ -12,35 +14,37 @@ class Public::PostsController < ApplicationController
     if @post.save
       redirect_to post_path(@post), notice: "投稿が作成されました。"
     else
-      render :new, alert: "投稿に失敗しました。"
+      flash.now[:alert] = "投稿に失敗しました。"
+      render :new
     end
   end
 
   def index
-    @posts = Post.includes(:user).order(created_at: :desc)
+    @posts = Post.includes(:user, :post_comments).order(created_at: :desc)
   end
 
   def show
-    # 投稿は `set_post` により取得済み
+    @comments = @post.post_comments.includes(:user) # 投稿に紐付いたコメント一覧
+    @comment = PostComment.new # 新規コメント用
   end
 
-  def edit
-    # 投稿は `set_post` により取得済み
-  end
+  def edit; end
 
   def update
     if @post.update(post_params)
-      flash[:notice] = "投稿を更新しました。"
-      redirect_to post_path(@post.id)
+      redirect_to post_path(@post.id), notice: "投稿を更新しました。"
     else
-      flash[:alert] = "投稿の更新に失敗しました。"
+      flash.now[:alert] = "投稿の更新に失敗しました。"
       render :edit
     end
   end
 
   def destroy
-    @post.destroy
-    flash[:notice] = "投稿を削除しました。"
+    if @post.destroy
+      flash[:notice] = "投稿を削除しました。"
+    else
+      flash[:alert] = "投稿の削除に失敗しました。"
+    end
     redirect_to posts_path
   end
 
@@ -52,16 +56,18 @@ class Public::PostsController < ApplicationController
 
   def set_post
     @post = Post.find(params[:id])
-  rescue ActiveRecord::RecordNotFound
-    flash[:alert] = "投稿が見つかりません。"
-    redirect_to posts_path
   end
 
-  # 現在のユーザーが投稿者であるか確認
   def correct_user
     unless @post.user == current_user
       flash[:alert] = "権限がありません。"
       redirect_to posts_path
     end
   end
+
+  def handle_record_not_found
+    flash[:alert] = "投稿が見つかりません。"
+    redirect_to posts_path
+  end
 end
+
