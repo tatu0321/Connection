@@ -5,6 +5,8 @@
         <% @posts.each do |post| %>
           <!-- カード全体を投稿詳細リンクに -->
           <div class="card mb-4 shadow-sm" style="cursor: pointer;" onclick="location.href='<%= post_path(post) %>';">
+
+            <!-- カードヘッダー -->
             <div class="card-header d-flex align-items-center">
               <!-- アバター（投稿者情報ページリンク） -->
               <%= link_to image_tag(post.user.avatar.attached? ? post.user.avatar : 'no_image.jpg',
@@ -21,14 +23,25 @@
                 </h5>
               </div>
             </div>
+
+            <!-- カード本文 -->
             <div class="card-body">
               <!-- 投稿内容（クリックで投稿詳細） -->
               <p class="mb-0">
                 <%= truncate(post.content, length: 100) %>
               </p>
             </div>
-            <div class="card-footer text-muted text-end">
-              投稿日時: <%= post.created_at.strftime("%Y-%m-%d %H:%M") %>
+
+            <!-- カードフッター -->
+            <div class="card-footer text-muted d-flex justify-content-between">
+              <!-- 投稿日時 -->
+              <small>投稿日時: <%= post.created_at.strftime("%Y-%m-%d %H:%M") %></small>
+              
+              <!-- コメント数 -->
+              <div class="d-flex align-items-center">
+                <span class="me-1">💬</span>
+                <%= post.post_comments.count %>
+              </div>
             </div>
           </div>
         <% end %>
@@ -41,3 +54,4 @@
     </div>
   </div>
 </div>
+
