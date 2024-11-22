@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
 
   def after_sign_in_path_for(resource)
     if resource.is_a?(Admin)
-      admin_root_path # 管理者用ダッシュボードページへリダイレクト
+      admin_admins_root_path # 管理者用ダッシュボードページへリダイレクト
     else
       mypage_path # ユーザーのマイページへリダイレクト
     end
