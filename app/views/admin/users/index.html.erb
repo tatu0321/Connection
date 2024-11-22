@@ -1,16 +1,35 @@
-<h1>会員一覧</h1>
-<table>
-  <tr>
-    <th>名前</th>
-    <th>メール</th>
-    <th>詳細</th>
-  </tr>
-  <% @users.each do |user| %>
-    <tr>
-      <td><%= user.name %></td>
-      <td><%= user.email %></td>
-      <td><%= link_to '詳細', admin_user_path(user) %></td>
-    </tr>
-  <% end %>
-</table>
-<%= link_to "logout", destroy_admin_session_path %>
+<div class="container">
+  <h4 class="m-4"><span style="background-color:#eeeeee">会員一覧</span></h4>
+</div>
+
+<div class="container">
+  <div class="row">
+    <table class="table">
+      <thead class="thead-light">
+        <tr>
+          <th>会員ID</th>
+          <th>氏名</th>
+          <th>メールアドレス</th>
+          <th>ステータス</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @users.each do |user| %>
+          <tr>
+            <td><%= user.id %></td>
+            <td><%= link_to user.name, admin_user_path(user) %></td>
+            <td><%= user.email %></td>
+
+            <% if user.is_active? %> <!-- is_activeメソッドを使用 -->
+              <td class="text-success">有効</td>
+            <% else %>
+              <td class="text-secondary">退会</td>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <%= paginate @users %> <!-- ページネーションの追加 -->
+  </div>
+</div>

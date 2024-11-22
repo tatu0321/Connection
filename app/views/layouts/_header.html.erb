@@ -2,6 +2,8 @@
   <div class="container-fluid">
     <% if user_signed_in? %>
       <%= link_to "Connection", posts_path, class: "navbar-brand text-white" %> <!-- 投稿一覧ページへのリンク -->
+    <% elsif admin_signed_in? %>
+      <%= link_to "Connection", admin_users_path, class: "navbar-brand text-white" %> <!-- 管理者用投稿一覧ページへのリンク -->
     <% else %>
       <%= link_to "Connection", root_path, class: "navbar-brand text-white" %>
     <% end %>
@@ -24,6 +26,17 @@
           </li>
           <li class="nav-item">
             <%= link_to "Sign out", destroy_user_session_path, method: :get, class: "nav-link btn btn-outline-secondary btn-sm mx-3 text-white border-white" %>
+          </li>
+          <% elsif admin_signed_in? %>
+          <!-- 管理者用のリンク -->
+          <li class="nav-item">
+            <%= link_to "会員一覧", admin_users_path, class: "nav-link btn btn-outline-light btn-sm mx-3 text-white border-white" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "投稿一覧", admin_posts_path, class: "nav-link btn btn-outline-light btn-sm mx-3 text-white border-white" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Sign out", destroy_admin_session_path, method: :get, class: "nav-link btn btn-outline-secondary btn-sm mx-3 text-white border-white" %>
           </li>
         <% else %>
           <!-- サインイン前のリンク -->
