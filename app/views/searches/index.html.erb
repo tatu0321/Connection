@@ -6,7 +6,7 @@
       <% if @users.any? %>
         <% @users.each do |user| %>
           <div class="card text-center mb-3">
-            <%= link_to user == current_user ? mypage_path : user_path(user) do %>
+            <%= link_to user == current_user ? mypage_path : (@is_admin ? admin_user_path(user) : user_path(user)) do %>
               <%= image_tag user.avatar.attached? ? user.avatar : 'no_image.jpg',
                             class: 'rounded-circle mt-3', size: '60x60' %>
               <div class="card-body p-2">
@@ -32,13 +32,13 @@
               <!-- アバター -->
               <%= link_to image_tag(post.user.avatar.attached? ? post.user.avatar : 'no_image.jpg',
                                     class: 'rounded-circle me-3', size: '40x40'),
-                          post.user == current_user ? mypage_path : user_path(post.user),
+                          post.user == current_user ? mypage_path : (@is_admin ? admin_user_path(post.user) : user_path(post.user)),
                           class: "text-decoration-none",
                           onclick: "event.stopPropagation();" %>
               <div>
                 <!-- 投稿者名 -->
                 <h5 class="mb-0">
-                  <%= link_to post.user.name, post.user == current_user ? mypage_path : user_path(post.user),
+                  <%= link_to post.user.name, post.user == current_user ? mypage_path : (@is_admin ? admin_user_path(post.user) : user_path(post.user)),
                               class: "text-decoration-none text-dark",
                               onclick: "event.stopPropagation();" %>
                 </h5>
@@ -63,3 +63,4 @@
     </div>
   </div>
 </div>
+

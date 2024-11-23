@@ -1,4 +1,3 @@
-<!-- 管理者用ユーザー詳細ページ -->
 <div class="container mt-5">
   <div class="row">
     <!-- 左側のユーザー情報 -->
@@ -50,4 +49,12 @@
       <% end %>
     </div>
   </div>
+
+  <!-- 退会ボタンをカード外に配置 -->
+  <div class="row justify-content-center mt-4">
+    <div class="col-md-6 text-center">
+      <%= link_to '退会させる', admin_user_path(@user), method: :delete, data: { confirm: '本当に退会させますか？' }, class: 'btn btn-danger btn-lg' %>
+    </div>
+  </div>
 </div>
+
