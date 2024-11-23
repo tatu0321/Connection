@@ -8,11 +8,11 @@
           <%= link_to image_tag(
               @post.user.avatar.attached? ? @post.user.avatar : "no_image.jpg",
               class: "rounded-circle me-3 border", size: "50x50"),
-              @post.user == current_user ? mypage_path : user_path(@post.user) %>
+              admin_user_path(@post.user) %>
           <div>
             <h5 class="mb-0">
               <%= link_to @post.user.name,
-                          @post.user == current_user ? mypage_path : user_path(@post.user),
+                          admin_user_path(@post.user),
                           class: "text-decoration-none text-dark" %>
             </h5>
             <small class="text-muted">投稿日: <%= @post.created_at.in_time_zone("Asia/Tokyo").strftime("%Y-%m-%d %H:%M") %></small>
@@ -31,34 +31,13 @@
               💬 <%= @post.post_comments.count %> コメント
             </span>
           </div>
-          <% if @post.user == current_user %>
-            <div class="d-flex">
-              <%= link_to "編集する", edit_post_path(@post), class: "btn btn-outline-primary btn-sm me-2 mr-2" %>
-              <%= link_to post_path(@post),
-                  method: :delete,
-                  data: { confirm: "本当に削除しますか？" },
-                  class: "btn btn-outline-danger btn-sm" do %>
-                  削除
-              <% end %>
-            </div>
-          <% end %>
-        </div>
-      </div>
-
-      <!-- コメントフォーム -->
-      <div class="card shadow-sm mb-4">
-        <div class="card-body">
-          <h5 class="mb-3">コメントを投稿する</h5>
-          <div class="d-flex align-items-start">
-            <%= image_tag current_user.avatar.attached? ? current_user.avatar : "no_image.jpg",
-                          class: "rounded-circle me-3 border", size: "50x50" %>
-            <%= form_with model: [@post, @comment], local: true, class: "w-100" do |f| %>
-              <div class="form-floating mb-3">
-                <%= f.text_area :content, class: "form-control", rows: 2, placeholder: "コメントを入力してください", id: "commentContent" %>
-              </div>
-              <div class="text-end">
-                <%= f.submit "コメントを投稿", class: "btn btn-primary btn-sm" %>
-              </div>
+          <!-- 管理者の削除ボタン -->
+          <div>
+            <%= link_to admin_post_path(@post),
+                method: :delete,
+                data: { confirm: "本当に削除しますか？" },
+                class: "btn btn-outline-danger btn-sm" do %>
+                削除
             <% end %>
           </div>
         </div>
@@ -83,18 +62,15 @@
                     <div class="flex-grow-1">
                       <div class="d-flex justify-content-between align-items-center">
                         <strong>
-                          <%= link_to comment.user.name, user_path(comment.user), class: "text-decoration-none text-dark" %>
+                          <%= link_to comment.user.name, admin_user_path(comment.user), class: "text-decoration-none text-dark" %>
                         </strong>
-                        <% if comment.user == current_user %>
-                          <div class="d-flex gap-1">
-                            <%= link_to "編集", edit_post_post_comment_path(@post, comment),
-                                        class: "btn btn-sm btn-outline-primary mr-2" %>
-                            <%= link_to "削除", post_post_comment_path(@post, comment),
-                                        method: :delete,
-                                        data: { confirm: "コメントを削除しますか？" },
-                                        class: "btn btn-sm btn-outline-danger" %>
-                          </div>
-                        <% end %>
+                        <!-- 管理者は全てのコメント削除が可能 -->
+                        <div>
+                          <%= link_to "削除", admin_post_comment_path(post_id: @post.id, id: comment.id),
+                                      method: :delete,
+                                      data: { confirm: "コメントを削除しますか？" },
+                                      class: "btn btn-sm btn-outline-danger" %>
+                        </div>
                       </div>
                       <p class="mb-1"><%= comment.content %></p>
                       <small class="text-muted"><%= time_ago_in_words(comment.created_at) %> ago</small>

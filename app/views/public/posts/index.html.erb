@@ -35,7 +35,7 @@
             <!-- カードフッター -->
             <div class="card-footer text-muted d-flex justify-content-between">
               <!-- 投稿日時 -->
-              <small>投稿日時: <%= post.created_at.strftime("%Y-%m-%d %H:%M") %></small>
+              <small>投稿日時: <%= post.created_at.in_time_zone("Asia/Tokyo").strftime("%Y-%m-%d %H:%M") %></small>
               
               <!-- コメント数 -->
               <div class="d-flex align-items-center">
