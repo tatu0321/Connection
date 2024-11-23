@@ -1,15 +1,62 @@
-<h1>投稿一覧</h1>
-<table>
-  <tr>
-    <th>投稿内容</th>
-    <th>投稿者</th>
-    <th>操作</th>
-  </tr>
-  <% @posts.each do |post| %>
-    <tr>
-      <td><%= post.content %></td>
-      <td><%= post.user.name %></td>
-      <td><%= link_to '削除', admin_post_path(post), method: :delete, data: { confirm: '本当に削除しますか？' } %></td>
-    </tr>
-  <% end %>
-</table>
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-12">
+      <% if @posts.any? %>
+        <% @posts.each do |post| %>
+          <!-- カード全体を投稿詳細リンクに -->
+          <div class="card mb-4 shadow-sm" style="cursor: pointer;" onclick="location.href='<%= admin_post_path(post) %>';">
+            
+            <!-- カードヘッダー -->
+            <div class="card-header d-flex align-items-center">
+              <!-- アバター（投稿者情報ページリンク） -->
+              <%= link_to image_tag(post.user.avatar.attached? ? post.user.avatar : 'no_image.jpg',
+                                    class: 'rounded-circle me-3', size: '40x40'),
+                          admin_user_path(post.user),
+                          class: "text-decoration-none",
+                          onclick: "event.stopPropagation();" %>
+              <div>
+                <!-- 投稿者名（投稿者情報ページリンク） -->
+                <h5 class="mb-0">
+                  <%= link_to post.user.name, admin_user_path(post.user),
+                              class: "text-decoration-none text-dark",
+                              onclick: "event.stopPropagation();" %>
+                </h5>
+              </div>
+            </div>
+            
+            <!-- カード本文 -->
+            <div class="card-body">
+              <!-- 投稿内容（クリックで投稿詳細） -->
+              <p class="mb-0">
+                <%= truncate(post.content, length: 100) %>
+              </p>
+            </div>
+            
+            <!-- カードフッター -->
+            <div class="card-footer text-muted d-flex justify-content-between align-items-center">
+              <!-- 投稿日時 -->
+              <small>投稿日時: <%= post.created_at.in_time_zone("Asia/Tokyo").strftime("%Y-%m-%d %H:%M") %></small>
+              
+              <!-- コメント数 -->
+              <div class="d-flex align-items-center">
+                <span class="me-1">💬</span>
+                <%= post.post_comments.count %>
+              </div>
+
+              <!-- 投稿削除ボタン -->
+              <%= link_to "削除", admin_post_path(post), 
+                          method: :delete,
+                          data: { confirm: "本当にこの投稿を削除しますか？" },
+                          class: "btn btn-sm btn-outline-danger" %>
+            </div>
+          </div>
+        <% end %>
+      <% else %>
+        <!-- 投稿が存在しない場合 -->
+        <div class="alert alert-info text-center">
+          投稿がまだありません。
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
