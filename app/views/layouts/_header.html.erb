@@ -57,9 +57,11 @@
     </div>
 
     <!-- 検索窓 -->
-    <form action="<%= searches_path %>" method="get" class="d-flex justify-content-center">
-      <input type="text" name="q" placeholder="検索" class="form-control me-2 w-50">
-      <button type="submit" class="btn btn-outline-light">検索</button>
-    </form>
+    <% if user_signed_in? || admin_signed_in? %>
+      <form action="<%= searches_path %>" method="get" class="d-flex justify-content-center">
+        <input type="text" name="q" placeholder="検索" class="form-control me-2 w-50">
+        <button type="submit" class="btn btn-outline-light">検索</button>
+      </form>
+    <% end %>
   </div>
 </header>

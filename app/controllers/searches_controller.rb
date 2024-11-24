@@ -1,4 +1,5 @@
 class SearchesController < ApplicationController
+  before_action :authenticate_user!, only: [:index]  # ユーザーがログインしているか確認
 
   def index
     query = params[:q]
