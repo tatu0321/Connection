@@ -21,6 +21,8 @@
                               class: "text-decoration-none text-dark",
                               onclick: "event.stopPropagation();" %>
                 </h5>
+                <!-- 投稿日 -->
+                <small class="text-muted">投稿日時: <%= post.created_at.in_time_zone("Asia/Tokyo").strftime("%Y-%m-%d %H:%M") %></small>
               </div>
             </div>
             
@@ -34,15 +36,12 @@
             
             <!-- カードフッター -->
             <div class="card-footer text-muted d-flex justify-content-between align-items-center">
-              <!-- 投稿日時 -->
-              <small>投稿日時: <%= post.created_at.in_time_zone("Asia/Tokyo").strftime("%Y-%m-%d %H:%M") %></small>
-              
               <!-- コメント数 -->
               <div class="d-flex align-items-center">
                 <span class="me-1">💬</span>
                 <%= post.post_comments.count %>
               </div>
-
+              
               <!-- 投稿削除ボタン -->
               <%= link_to "削除", admin_post_path(post), 
                           method: :delete,
@@ -60,3 +59,4 @@
     </div>
   </div>
 </div>
+
