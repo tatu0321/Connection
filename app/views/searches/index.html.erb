@@ -1,23 +1,54 @@
 <div class="container my-5">
-  <div class="row justify-content-center">
+  <div class="row">
+    <!-- 左側: ユーザー検索結果 -->
+    <div class="col-md-4">
+      <h2 class="mb-3">ユーザー検索結果</h2>
+      <% if @users.any? %>
+        <% @users.each do |user| %>
+          <div class="card text-center mb-3">
+            <%= link_to (admin_signed_in? ? admin_user_path(user) : user_path(user)) do %>
+              <%= image_tag user.avatar.attached? ? user.avatar : 'no_image.jpg',
+                            class: 'rounded-circle mt-3', size: '60x60' %>
+              <div class="card-body">
+                <h6 class="card-title"><%= user.name %></h6>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      <% else %>
+        <p>該当するユーザーがいません。</p>
+      <% end %>
+    </div>
+
+    <!-- 右側: 投稿検索結果 -->
     <div class="col-md-8 col-12">
+      <h2 class="mb-3">ユーザー検索結果</h2>
+      <% if @search_term.present? %>
+        <!-- 検索キーワードがある場合のメッセージ -->
+        <div class="alert alert-info text-center">
+          「<%= @search_term %>」での検索結果
+        </div>
+      <% end %>
+
       <% if @posts.any? %>
         <% @posts.each do |post| %>
           <!-- カード全体を投稿詳細リンクに -->
-          <div class="card mb-4 shadow-sm" style="cursor: pointer;" onclick="location.href='<%= post_path(post) %>';">
+          <div class="card mb-4 shadow-sm" style="cursor: pointer;" 
+               onclick="location.href='<%= admin_signed_in? ? admin_post_path(post) : post_path(post) %>';">
             
             <!-- カードヘッダー -->
             <div class="card-header d-flex align-items-center">
               <!-- アバター（投稿者情報ページリンク） -->
               <%= link_to image_tag(post.user.avatar.attached? ? post.user.avatar : 'no_image.jpg',
                                     class: 'rounded-circle me-3', size: '40x40'),
-                          post.user == current_user ? mypage_path : user_path(post.user),
+                          (admin_signed_in? ? admin_user_path(post.user) : user_path(post.user)),
                           class: "text-decoration-none",
                           onclick: "event.stopPropagation();" %>
               <div>
                 <!-- 投稿者名（投稿者情報ページリンク） -->
                 <h5 class="mb-0">
-                  <%= link_to post.user.name, post.user == current_user ? mypage_path : user_path(post.user),
+                  <%= link_to post.user.name, 
+                              (admin_signed_in? ? admin_user_path(post.user) : user_path(post.user)),
                               class: "text-decoration-none text-dark",
                               onclick: "event.stopPropagation();" %>
                 </h5>
@@ -47,10 +78,9 @@
       <% else %>
         <!-- 投稿が存在しない場合 -->
         <div class="alert alert-info text-center">
-          投稿がまだありません。
+          投稿が見つかりませんでした。
         </div>
       <% end %>
     </div>
   </div>
 </div>
-

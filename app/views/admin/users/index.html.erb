@@ -1,0 +1,28 @@
+<div class="container">
+  <h4 class="m-4"><span style="background-color:#eeeeee">会員一覧</span></h4>
+</div>
+
+<div class="container">
+  <div class="row">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>会員ID</th>
+          <th>氏名</th>
+          <th>メールアドレス</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @users.each do |user| %>
+          <tr>
+            <td><%= user.id %></td>
+            <td><%= link_to user.name, admin_user_path(user) %></td>
+            <td><%= user.email %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <%= paginate @users %> <!-- ページネーションの追加 -->
+  </div>
+</div>
