@@ -47,17 +47,17 @@
                   <%= link_to '❤️', favorite_path(post.favorites.find_by(user_id: current_user.id)), 
                               method: :delete, 
                               remote: true, 
-                              class: "text-danger", 
+                              class: "text-danger favorite-post-id-" + post.id.to_s, 
                               data: { id: post.id } %>
                 <% else %>
                   <!-- いいねしていない（追加リンク） -->
                   <%= link_to '🤍', favorites_path(post_id: post.id), 
                               method: :post, 
                               remote: true, 
-                              class: "text-dark", 
+                              class: "text-dark favorite-post-id-" + post.id.to_s, 
                               data: { id: post.id } %>
                 <% end %>
-                <span><%= post.favorites.count %></span>
+                <span class="favorite-count-post-id-<%= post.id %>"><%= post.favorites.count %></span>
               </div>
             </div>
           </div>
