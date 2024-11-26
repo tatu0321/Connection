@@ -1,14 +1,19 @@
 class SearchesController < ApplicationController
-  before_action :authenticate_user!, only: [:index]  # ユーザーがログインしているか確認
+  #before_action :authenticate_user!, only: [:index]  # ユーザーがログインしているか確認 
+  
 
   def index
-    query = params[:q]
-    if query.present?
-      @users = User.where('name LIKE ?', "%#{query}%")
-      @posts = Post.where('content LIKE ?', "%#{query}%")
+    if user_signed_in? || admin_signed_in?
+      query = params[:q]
+      if query.present?
+        @users = User.where('name LIKE ?', "%#{query}%")
+        @posts = Post.where('content LIKE ?', "%#{query}%")
+      else
+        @users = []
+        @posts = []
+      end
     else
-      @users = []
-      @posts = []
+      redirect_to root_path
     end
   end
 end
