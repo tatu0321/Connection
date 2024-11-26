@@ -4,10 +4,10 @@
       <% if @posts.any? %>
         <% @posts.each do |post| %>
           <!-- カード全体を投稿詳細リンクに -->
-          <div class="card mb-4 shadow-sm" style="cursor: pointer;" onclick="location.href='<%= admin_post_path(post) %>';">
+          <div class="card mb-4 shadow-sm" style="cursor: pointer;">
             
             <!-- カードヘッダー -->
-            <div class="card-header d-flex align-items-center">
+            <div class="card-header d-flex align-items-center" data-id="<%= post.id %>">
               <!-- アバター（投稿者情報ページリンク） -->
               <%= link_to image_tag(post.user.avatar.attached? ? post.user.avatar : 'no_image.jpg',
                                     class: 'rounded-circle me-3', size: '40x40'),
@@ -27,7 +27,7 @@
             </div>
             
             <!-- カード本文 -->
-            <div class="card-body">
+            <div class="card-body" data-id="<%= post.id %>">
               <!-- 投稿内容（クリックで投稿詳細） -->
               <p class="mb-0">
                 <%= truncate(post.content, length: 100) %>
@@ -60,3 +60,9 @@
   </div>
 </div>
 
+<script>
+  $(".card-header, .card-body").on('click', function() {
+    const id = $(this).data('id');
+    location.href = `/admin/posts/${id}`;
+  });
+</script>

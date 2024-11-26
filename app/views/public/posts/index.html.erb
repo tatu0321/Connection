@@ -4,10 +4,10 @@
       <% if @posts.any? %>
         <% @posts.each do |post| %>
           <!-- カード全体を投稿詳細リンクに -->
-          <div class="card mb-4 shadow-sm" style="cursor: pointer;" onclick="location.href='<%= post_path(post) %>';">
+          <div class="card mb-4 shadow-sm" style="cursor: pointer;">
             
             <!-- カードヘッダー -->
-            <div class="card-header d-flex align-items-center">
+            <div class="card-header d-flex align-items-center" data-id="<%= post.id %>">
               <!-- アバター（投稿者情報ページリンク） -->
               <%= link_to image_tag(post.user.avatar.attached? ? post.user.avatar : 'no_image.jpg',
                                     class: 'rounded-circle me-3', size: '40x40'),
@@ -27,7 +27,7 @@
             </div>
             
             <!-- カード本文 -->
-            <div class="card-body">
+            <div class="card-body" data-id="<%= post.id %>">
               <!-- 投稿内容（クリックで投稿詳細） -->
               <p class="mb-0">
                 <%= truncate(post.content, length: 100) %>
@@ -40,6 +40,24 @@
               <div class="d-flex align-items-center">
                 <span class="me-1">💬</span>
                 <%= post.post_comments.count %>
+              </div>
+              <div class="d-flex align-items-center">
+                <% if current_user.favorites.exists?(post_id: post.id) %>
+                  <!-- いいね済み（取り消しリンク） -->
+                  <%= link_to '❤️', favorite_path(post.favorites.find_by(user_id: current_user.id)), 
+                              method: :delete, 
+                              remote: true, 
+                              class: "text-danger", 
+                              data: { id: post.id } %>
+                <% else %>
+                  <!-- いいねしていない（追加リンク） -->
+                  <%= link_to '🤍', favorites_path(post_id: post.id), 
+                              method: :post, 
+                              remote: true, 
+                              class: "text-dark", 
+                              data: { id: post.id } %>
+                <% end %>
+                <span><%= post.favorites.count %></span>
               </div>
             </div>
           </div>
@@ -54,3 +72,9 @@
   </div>
 </div>
 
+<script>
+  $(".card-header, .card-body").on('click', function() {
+    const id = $(this).data('id');
+    location.href = `/posts/${id}`;
+  });
+</script>

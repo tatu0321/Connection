@@ -1,0 +1,5 @@
+// いいねボタンのカウントを更新
+$(`[data-id='<%= @post.id %>'] .favorite-count`).text('<%= @post.favorites.count %>');
+
+// いいねボタンを🤍に変更
+$(`[data-id='<%= @post.id %>'] .favorite-link`).replaceWith("<%= j(link_to '🤍', favorites_path(post_id: @post.id), method: :post, remote: true, class: 'text-dark me-2', data: { id: @post.id }) %>");
