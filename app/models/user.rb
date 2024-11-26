@@ -7,6 +7,8 @@ class User < ApplicationRecord
   has_many :posts, dependent: :destroy
   has_one_attached :avatar
   has_many :post_comments, dependent: :destroy
+  has_many :favorites, dependent: :destroy
+  has_many :favorited_posts, through: :favorites, source: :post
 
   validates :name, length:{ minimum:2, maximum:20}, uniqueness: true
   validates :introduction, length:{maximum:50}
