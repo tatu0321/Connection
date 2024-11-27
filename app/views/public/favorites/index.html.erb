@@ -1,12 +1,12 @@
 <div class="container my-5">
-  <!-- 投稿一覧ページのタイトル -->
-  <h3 class="text-center mb-4">投稿一覧</h3>
-  <p class="text-center mb-4">ここではすべての投稿を閲覧できます。</p>
+  <!-- ブックマークページのタイトル -->
+  <h3 class="text-center mb-4">ブックマーク</h3>
+  <p class="text-center mb-4">あなたがいいねした投稿がここに表示されます。</p>
   
   <div class="row justify-content-center">
     <div class="col-md-8 col-12">
-      <% if @posts.any? %>
-        <% @posts.each do |post| %>
+      <% if @favorite_posts.any? %>
+        <% @favorite_posts.each do |post| %>
           <div class="card mb-4 shadow-sm" style="cursor: pointer;">
             
             <!-- カードヘッダー -->
@@ -68,7 +68,7 @@
       <% else %>
         <!-- 投稿が存在しない場合 -->
         <div class="alert alert-info text-center">
-          まだ投稿がありません。
+          まだいいねした投稿がありません。
         </div>
       <% end %>
     </div>
