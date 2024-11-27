@@ -10,6 +10,11 @@ class Public::FavoritesController < ApplicationController
     end
   end
 
+  def index
+    # ログインユーザーがいいねした投稿を取得
+    @favorite_posts = current_user.favorites.includes(:post).map(&:post)
+  end
+
   def destroy
     @favorite = current_user.favorites.find(params[:id])
     @post = @favorite.post
