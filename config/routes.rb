@@ -27,9 +27,15 @@ Rails.application.routes.draw do
     resources :posts do
       resources :post_comments, only: [:create, :destroy, :edit, :update]
     end
-    resources :users, only: [:show, :edit, :update, :destroy]
+    resources :users, only: [:show, :edit, :update, :destroy] do
+      member do
+        get :followers
+        get :following
+      end
+    end
     resources :favorites, only: [:create, :index, :destroy]
-
+    resources :relationships, only: [:create, :destroy]
+    resources :relationships, only: [:create, :destroy]  # フォロー・フォロー解除用
   end
 
   get 'searches', to: 'searches#index'

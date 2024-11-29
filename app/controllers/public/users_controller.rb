@@ -9,7 +9,7 @@ class Public::UsersController < ApplicationController
       @user = current_user
       @is_current_user = true
     else
-    # 他人のプロフィール詳細の場合
+      # 他人のプロフィール詳細の場合
       @user = User.find(params[:id])
       @is_current_user = current_user == @user
     end
@@ -17,7 +17,20 @@ class Public::UsersController < ApplicationController
   rescue ActiveRecord::RecordNotFound
     redirect_to root_path, alert: "ユーザーが見つかりませんでした。"
   end
-  
+
+  # フォロー一覧
+  def following
+    @user = User.find(params[:id])  # ユーザーを取得
+    @users = @user.following
+  end
+
+  # フォロワー一覧
+  def followers
+    @user = User.find(params[:id])
+    @followers = @user.followers    # フォロワーを取得
+    @users = @user.followers
+  end
+
   def edit
     @user = current_user
   end
@@ -61,4 +74,3 @@ class Public::UsersController < ApplicationController
     end
   end  
 end
-
