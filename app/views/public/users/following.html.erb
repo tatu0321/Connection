@@ -1,0 +1,30 @@
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 50vh;">
+  <div class="col-md-4">
+    <h2 class="mb-3 text-center">フォロー一覧</h2>
+    
+    <% if @users.any? %>
+      <% @users.each do |user| %>
+        <div class="card text-center mb-3">
+          <%= link_to (admin_signed_in? ? admin_user_path(user) : user_path(user)) do %>
+            <!-- プロフィール画像の表示 -->
+            <%= image_tag user.avatar.attached? ? user.avatar : 'no_image.jpg',
+                          class: 'rounded-circle mt-3', size: '60x60', alt: "#{user.name}'s avatar" %>
+            
+            <div class="card-body">
+              <!-- ユーザー名の表示 -->
+              <h6 class="card-title"><%= user.name %></h6>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    <% else %>
+      <p class="text-center">該当するユーザーがいません。</p>
+    <% end %>
+  </div>
+</div>
+
+
+
+
+
+

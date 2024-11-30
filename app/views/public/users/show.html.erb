@@ -6,10 +6,16 @@
 
       <% if @is_current_user %>
         <!-- プロフィール編集ボタン -->
-          <%= link_to edit_user_path(@user), 
-              class: "btn btn-outline-secondary w-100 mt-3 #{'disabled' if @user.email == 'guest@example.com'}" do %>
-            <i class="fas fa-user-cog"></i> プロフィール編集
-          <% end %>
+        <%= link_to edit_user_path(@user), 
+            class: "btn btn-outline-secondary w-100 mt-3 #{'disabled' if @user.email == 'guest@example.com'}" do %>
+          <i class="fas fa-user-cog"></i> プロフィール編集
+        <% end %>
+
+        <!-- フォロー一覧ボタン -->
+        <%= link_to "フォロー", following_user_path(@user), class: "btn btn-outline-primary w-100 mt-2" %>
+
+        <!-- フォロワー一覧ボタン -->
+        <%= link_to "フォロワー", followers_user_path(@user), class: "btn btn-outline-primary w-100 mt-2" %>
 
         <!-- 退会ボタン -->
         <% if @user.email == 'guest@example.com' %>
@@ -20,6 +26,13 @@
               data: { confirm: "本当に退会しますか？" },
               class: "btn btn-danger mt-3 w-100" %>
         <% end %>
+      <% else %>
+        <!-- フォロー/フォロー解除ボタン -->
+        <% if current_user.following?(@user) %>
+          <%= button_to "フォロー解除", relationship_path(@user), method: :delete, class: "btn btn-danger w-100 mt-3" %>
+        <% else %>
+          <%= button_to "フォロー", relationships_path(followed_id: @user.id), method: :post, class: "btn btn-primary w-100 mt-3" %>
+        <% end %>
       <% end %>
     </div>
 
@@ -27,3 +40,4 @@
     <%= render partial: "public/users/post_list", locals: { posts: @posts } %>
   </div>
 </div>
+
