@@ -21,6 +21,7 @@ class Public::PostsController < ApplicationController
 
   def index
     @posts = Post.includes(:user, :post_comments).order(created_at: :desc)
+    @genres = Genre.all
   end
 
   def show
@@ -48,10 +49,20 @@ class Public::PostsController < ApplicationController
     redirect_to posts_path
   end
 
+  def search
+    @genres = Genre.all
+    if params[:genre_ids].present?
+      @posts = Post.where(genre_id: params[:genre_ids]).order(created_at: :desc)
+    else
+      @posts = Post.all.order(created_at: :desc)
+    end
+    render :index
+  end
+
   private
 
   def post_params
-    params.require(:post).permit(:content)
+    params.require(:post).permit(:content, :genre_id)
   end
 
   def set_post

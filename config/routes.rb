@@ -26,6 +26,9 @@ Rails.application.routes.draw do
 
     resources :posts do
       resources :post_comments, only: [:create, :destroy, :edit, :update]
+      collection do
+        get :search
+      end
     end
     resources :users, only: [:show, :edit, :update, :destroy] do
       member do
@@ -50,5 +53,6 @@ Rails.application.routes.draw do
     resources :posts, only: [:index, :show, :destroy] # 投稿一覧、削除
     resources :users, only: [:index, :show, :destroy] # 会員一覧、詳細、削除
     resources :post_comments, only: [:destroy] # コメント削除
+    resources :genres, only: [:index, :new, :create, :edit, :update, :destroy] #ジャンル一覧、新規、編集、削除
   end
 end
