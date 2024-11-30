@@ -21,6 +21,10 @@
 
         <!-- 投稿内容 -->
         <div class="card-body">
+        <!-- ジャンル表示 -->
+          <div class="mt-1">
+            <span class="badge bg-primary"><%= @post.genre.name %></span>
+          </div>
           <p class="mb-4"><%= simple_format(@post.content) %></p>
         </div>
 
