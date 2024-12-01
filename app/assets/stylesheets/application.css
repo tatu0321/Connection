@@ -13,3 +13,32 @@
  *= require_tree .
  *= require_self
  */
+
+/* app/assets/stylesheets/application.scss */
+
+.filter-sidebar {
+  position: fixed;       /* 画面に固定 */
+  top: 210px;             /* 上からの位置調整 */
+  left: 120px;            /* 左側に配置 */
+  width: 300px;          /* 横幅調整 */
+  max-height: 90vh;      /* 最大高さを設定 */
+  overflow-y: auto;      /* 高さを超える内容はスクロール */
+  padding: 15px;
+  background-color: white;  /* 背景色 */
+  border: 1px solid #ddd;   /* 境界線 */
+  border-radius: 5px;       /* 角丸 */
+
+  z-index: 1000;            /* 他のコンテンツより前に表示 */
+}
+
+@media (max-width: 768px) {
+  .filter-sidebar {
+    position: relative;     /* モバイルでは固定しない */
+    width: 100%;             /* モバイルでは横幅を100%に */
+    top: 0;                  /* 上部に固定 */
+  }
+}
+
+.container {
+  margin-left: 280px;  /* 左側のフィルタ部分が固定されるため、右側に余白を追加 */
+}

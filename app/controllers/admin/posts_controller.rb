@@ -3,6 +3,7 @@ class Admin::PostsController < ApplicationController
 
   def index
     @posts = Post.all
+    @genres = Genre.all
   end
 
   def show
@@ -15,5 +16,15 @@ class Admin::PostsController < ApplicationController
     post = Post.find(params[:id])
     post.destroy
     redirect_to admin_posts_path, notice: '投稿を削除しました。'
+  end
+
+  def search
+    @genres = Genre.all
+    if params[:genre_ids].present?
+      @posts = Post.where(genre_id: params[:genre_ids]).order(created_at: :desc)
+    else
+      @posts = Post.all.order(created_at: :desc)
+    end
+    render :index
   end
 end

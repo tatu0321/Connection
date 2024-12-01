@@ -50,7 +50,11 @@ Rails.application.routes.draw do
     root to: 'users#index' # ログイン後に会員一覧にリダイレクト
 
     # 管理者の投稿、会員、コメント関連
-    resources :posts, only: [:index, :show, :destroy] # 投稿一覧、削除
+    resources :posts, only: [:index, :show, :destroy] do # 投稿一覧、削除
+      collection do
+        get 'search'
+      end
+    end
     resources :users, only: [:index, :show, :destroy] # 会員一覧、詳細、削除
     resources :post_comments, only: [:destroy] # コメント削除
     resources :genres, only: [:index, :new, :create, :edit, :update, :destroy] #ジャンル一覧、新規、編集、削除
