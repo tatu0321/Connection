@@ -1,6 +1,6 @@
 <div class="filter-sidebar">
   <h3>ジャンルで絞り込み</h3>
-  <%= form_with url: search_posts_path, method: :get, local: true do |f| %>
+  <%= form_with url: search_admin_posts_path, method: :get, local: true do |f| %>
     <% @genres.each do |genre| %>
       <div>
         <%= check_box_tag "genre_ids[]", genre.id, params[:genre_ids]&.include?(genre.id.to_s) %>
@@ -10,4 +10,3 @@
     <%= f.submit "検索", class: "filter-button" %>
   <% end %>
 </div>
-
