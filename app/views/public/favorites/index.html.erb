@@ -32,6 +32,14 @@
             <!-- カード本文 -->
             <div class="card-body" data-id="<%= post.id %>">
               <!-- 投稿内容（クリックで投稿詳細） -->
+              <!-- ジャンル表示 -->
+              <div class="mt-2 mb-2">
+                <% if post.genre.present? %>
+                  <span class="badge" style="background-color: <%= post.genre.color %>;">
+                    <%= post.genre.name %>
+                  </span>
+                <% end %>
+              </div>
               <p class="mb-0">
                 <%= truncate(post.content, length: 100) %>
               </p>

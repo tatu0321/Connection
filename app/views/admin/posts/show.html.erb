@@ -21,6 +21,15 @@
 
         <!-- 投稿内容 -->
         <div class="card-body">
+        <!-- ジャンル表示 -->
+          <div class="mt-1">
+            <% if @post.genre.present? %>
+              <!-- ジャンル名とその色を反映 -->
+              <span class="badge" style="background-color: <%= @post.genre.color %>;">
+                <%= @post.genre.name %>
+              </span>
+            <% end %>
+          </div>
           <p class="mb-4"><%= simple_format(@post.content) %></p>
         </div>
 
@@ -91,4 +100,3 @@
     </div>
   </div>
 </div>
-

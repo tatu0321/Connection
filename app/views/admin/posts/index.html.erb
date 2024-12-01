@@ -1,6 +1,14 @@
-<div class="container my-5">
-  <div class="row justify-content-center">
-    <div class="col-md-8 col-12">
+<div class="container-fluid my-5">
+  <h3 class="text-center mb-4">投稿一覧</h3>
+
+  <div class="row">
+    <!-- ジャンル絞り込みフォーム（左側） -->
+    <div class="col-md-3 col-12 ml-5">
+      <%= render "filter_form" %>
+    </div>
+
+    <!-- 投稿一覧（右側） -->
+    <div class="col-md-5 col-8">
       <% if @posts.any? %>
         <% @posts.each do |post| %>
           <!-- カード全体を投稿詳細リンクに -->
@@ -28,6 +36,15 @@
             
             <!-- カード本文 -->
             <div class="card-body" data-id="<%= post.id %>">
+              <!-- ジャンル表示 -->
+              <div class="mt-2">
+                <% if post.genre.present? %>
+                  <!-- ジャンル名とその色を反映 -->
+                  <span class="badge" style="background-color: <%= post.genre.color %>;">
+                    <%= post.genre.name %>
+                  </span>
+                <% end %>
+              </div>
               <!-- 投稿内容（クリックで投稿詳細） -->
               <p class="mb-0">
                 <%= truncate(post.content, length: 100) %>
