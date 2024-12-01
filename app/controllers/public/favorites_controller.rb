@@ -11,6 +11,7 @@ class Public::FavoritesController < ApplicationController
   end
 
   def index
+    @genres = Genre.all # ジャンルを取得
     # ログインユーザーがいいねした投稿を取得
     @favorite_posts = current_user.favorites.includes(:post).map(&:post)
   end
