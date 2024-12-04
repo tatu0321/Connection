@@ -36,7 +36,13 @@ Rails.application.routes.draw do
         get :following
       end
     end
-    resources :favorites, only: [:create, :index, :destroy]
+    
+    resources :favorites, only: [:create, :index, :destroy] do
+      collection do
+        get 'search' #検索用ルート
+      end
+    end
+
     resources :relationships, only: [:create, :destroy]
     resources :relationships, only: [:create, :destroy]  # フォロー・フォロー解除用
   end
