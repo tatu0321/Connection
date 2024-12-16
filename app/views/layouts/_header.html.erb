@@ -1,73 +1,77 @@
-<header class="navbar navbar-expand-lg" style="background-color: #53c7ea;">
+<header class="navbar" style="background-color: #53c7ea;">
   <div class="container-fluid">
-    <% if user_signed_in? %>
-      <%= link_to "Connection", posts_path, class: "navbar-brand text-white" %> <!-- 投稿一覧ページへのリンク -->
-    <% elsif admin_signed_in? %>
-      <%= link_to "Connection", admin_users_path, class: "navbar-brand text-white" %> <!-- 管理者用投稿一覧ページへのリンク -->
-    <% else %>
-      <%= link_to "Connection", root_path, class: "navbar-brand text-white" %>
-    <% end %>
-
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ml-auto"> <!-- ms-auto で右寄せ -->
+    <!-- 上段: ロゴ -->
+    <div class="row w-100 align-items-center">
+      <div class="col-md-6 d-flex">
         <% if user_signed_in? %>
-          <!-- ログイン後のリンク -->
-          <li class="nav-item">
-            <%= link_to "ホーム", posts_path, class: "nav-link btn btn-outline-light btn-sm mx-3 text-white border-white" %>
-          </li>
-          <li class="nav-item">
-            <%= link_to "マイページ", mypage_path, class: "nav-link btn btn-outline-light btn-sm mx-3 text-white border-white" %>
-          </li>
-          <li class="nav-item">
-            <%= link_to "新規投稿", new_post_path, class: "nav-link btn btn-outline-light btn-sm mx-3 text-white border-white" %>
-          </li>
-          <li class="nav-item">
-            <%= link_to "ブックマーク", favorites_path, class: "nav-link btn btn-outline-light btn-sm mx-3 text-white border-white" %>
-          </li>
-          <li class="nav-item">
-            <%= link_to "About", about_path, class: "nav-link btn btn-outline-light btn-sm mx-3 text-white border-white" %>
-          </li>
-          <li class="nav-item">
-            <%= link_to "Sign out", destroy_user_session_path, method: :delete, class: "nav-link btn btn-outline-secondary btn-sm mx-3 text-white border-white" %>
-          </li>
-          <% elsif admin_signed_in? %>
-          <!-- 管理者用のリンク -->
-          <li class="nav-item">
-            <%= link_to "会員一覧", admin_users_path, class: "nav-link btn btn-outline-light btn-sm mx-3 text-white border-white" %>
-          </li>
-          <li class="nav-item">
-            <%= link_to "投稿一覧", admin_posts_path, class: "nav-link btn btn-outline-light btn-sm mx-3 text-white border-white" %>
-          </li>
-          <li class="nav-item">
-            <%= link_to "ジャンル一覧", admin_genres_path, class: "nav-link btn btn-outline-light btn-sm mx-3 text-white border-white" %>
-          </li>
-          <li class="nav-item">
-            <%= link_to "Sign out", destroy_admin_session_path, method: :delete, class: "nav-link btn btn-outline-secondary btn-sm mx-3 text-white border-white" %>
-          </li>
+          <%= link_to "Connection", posts_path, class: "navbar-brand text-white", style: "margin-left: 50px;" %>
+        <% elsif admin_signed_in? %>
+          <%= link_to "Connection", admin_users_path, class: "navbar-brand text-white", style: "margin-left: 50px;" %>
         <% else %>
-          <!-- サインイン前のリンク -->
-          <li class="nav-item">
-            <%= link_to "ホーム", root_path, class: "nav-link btn btn-outline-light btn-sm mx-3 text-white border-white" %>
-          </li>
-          <li class="nav-item">
-            <%= link_to "Sign up", new_user_registration_path, class: "nav-link btn btn-outline-light btn-sm mx-3 text-white border-white" %>
-          </li>
-          <li class="nav-item">
-            <%= link_to "Sign in", new_user_session_path, class: "nav-link btn btn-outline-light btn-sm mx-3 text-white border-white" %>
-          </li>
-          <li class="nav-item">
-            <%= link_to "About", about_path, class: "nav-link btn btn-outline-light btn-sm mx-3 text-white border-white" %>
-          </li>
+          <%= link_to "Connection", root_path, class: "navbar-brand text-white", style: "margin-left: 50px;" %>
         <% end %>
-      </ul>
-    </div>
+      </div>
 
-    <!-- 検索窓 -->
-    <% if user_signed_in? || admin_signed_in? %>
-      <form action="<%= searches_path %>" method="get" class="d-flex justify-content-center">
-        <input type="text" name="q" placeholder="検索" class="form-control me-2 w-50">
-        <button type="submit" class="btn btn-outline-light">検索</button>
-      </form>
-    <% end %>
+      <!-- リンクと検索バー -->
+      <div class="col-md-6 d-flex flex-column align-items-end">
+        <!-- リンクリスト -->
+        <ul class="navbar-nav d-inline-flex flex-row mb-2">
+          <% if user_signed_in? %>
+            <li class="nav-item mx-2">
+              <%= link_to "ホーム", posts_path, class: "nav-link text-white border border-light rounded px-2" %>
+            </li>
+            <li class="nav-item mx-2">
+              <%= link_to "マイページ", mypage_path, class: "nav-link text-white border border-light rounded px-2" %>
+            </li>
+            <li class="nav-item mx-2">
+              <%= link_to "新規投稿", new_post_path, class: "nav-link text-white border border-light rounded px-2" %>
+            </li>
+            <li class="nav-item mx-2">
+              <%= link_to "ブックマーク", favorites_path, class: "nav-link text-white border border-light rounded px-2" %>
+            </li>
+            <li class="nav-item mx-2">
+              <%= link_to "About", about_path, class: "nav-link text-white border border-light rounded px-2" %>
+            </li>
+            <li class="nav-item mx-2">
+              <%= link_to "Sign out", destroy_user_session_path, method: :delete, class: "nav-link text-white border border-light rounded px-2" %>
+            </li>
+          <% elsif admin_signed_in? %>
+            <li class="nav-item mx-2">
+              <%= link_to "会員一覧", admin_users_path, class: "nav-link text-white border border-light rounded px-2" %>
+            </li>
+            <li class="nav-item mx-2">
+              <%= link_to "投稿一覧", admin_posts_path, class: "nav-link text-white border border-light rounded px-2" %>
+            </li>
+            <li class="nav-item mx-2">
+              <%= link_to "ジャンル一覧", admin_genres_path, class: "nav-link text-white border border-light rounded px-2" %>
+            </li>
+            <li class="nav-item mx-2">
+              <%= link_to "Sign out", destroy_admin_session_path, method: :delete, class: "nav-link text-white border border-light rounded px-2" %>
+            </li>
+          <% else %>
+            <li class="nav-item mx-2">
+              <%= link_to "ホーム", root_path, class: "nav-link text-white border border-light rounded px-2" %>
+            </li>
+            <li class="nav-item mx-2">
+              <%= link_to "Sign up", new_user_registration_path, class: "nav-link text-white border border-light rounded px-2" %>
+            </li>
+            <li class="nav-item mx-2">
+              <%= link_to "Sign in", new_user_session_path, class: "nav-link text-white border border-light rounded px-2" %>
+            </li>
+            <li class="nav-item mx-2">
+              <%= link_to "About", about_path, class: "nav-link text-white border border-light rounded px-2" %>
+            </li>
+          <% end %>
+        </ul>
+
+        <!-- 検索バー -->
+        <% if user_signed_in? || admin_signed_in? %>
+          <form action="<%= searches_path %>" method="get" class="d-flex">
+            <input type="text" name="q" placeholder="検索" class="form-control me-2 w-75">
+            <button type="submit" class="btn btn-outline-light">検索</button>
+          </form>
+        <% end %>
+      </div>
+    </div>
   </div>
 </header>
