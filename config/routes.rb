@@ -46,6 +46,7 @@ Rails.application.routes.draw do
     resources :relationships, only: [:create, :destroy]
     resources :relationships, only: [:create, :destroy]  # フォロー・フォロー解除用
     resources :chats, only: [:show, :create, :destroy]
+    resources :rooms, only: [:show]
   end
 
   get 'searches', to: 'searches#index'

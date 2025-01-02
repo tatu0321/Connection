@@ -1,28 +1,27 @@
-<h2 id="room" data-room="<%= @room.id %>" data-user="<%= current_user.id %>"><%= @user.name %> さんとのチャット</h2>
+<div style="display: flex; height: 100vh;">
+  <!-- 左側のユーザー情報 -->
+  <div style="width: 30%; border-right: 1px solid #ddd; padding: 20px;">
+    <%= render 'public/users/user_info', user: @user %>
+  </div>
 
-<div class="message" style="width: 400px;">
-  <% @chats.each do |chat| %>
-    <% if chat.user_id == current_user.id %>
-      <%= render "chats/chat", chat: chat %>
-    <% else %>
-      <div class="left-container d-flex">
-        <% if @user && @user.avatar.attached? %>
-          <%= image_tag @user.avatar, size: '30x30', style: 'border-radius: 50%' %>
+  <!-- 右側のチャットエリア -->
+  <div style="width: 70%; padding: 20px;">
+    <h2 id="room" data-room="<%= @room.id %>" data-user="<%= current_user.id %>"><%= @user.name %> さんとのチャット</h2>
+
+    <div class="message" style="width: 100%; max-width: 950px;">
+      <% @chats.each do |chat| %>
+        <% if chat.user_id == current_user.id %>
+          <p style="text-align: right;"><%= chat.message %></p>
         <% else %>
-          <%= image_tag 'no_image.jpg', size: '30x30', style: 'border-radius: 50%' %>
+          <p style="text-align: left;"><%= chat.message %></p>
         <% end %>
-        <p class="ml-1" style="text-align: left;">
-          <span style="background-color: #F5F5DC; padding: 5px; border-radius: 10px;">
-            <%= chat.message %>
-          </span>
-        </p>
-      </div>
-    <% end %>
-  <% end %>
-</div>
+      <% end %>
+    </div>
 
-<%= form_with model: @chat, data: {remote: true} do |f| %>
-  <%= f.text_field :message %>
-  <%= f.submit "送信", class: "btn btn-dark btn-sm" %>
-  <%= f.hidden_field :room_id %>
-<% end %>
+    <%= form_with model: @chat, data: {remote: true}, style: "margin-top: 20px;" do |f| %>
+      <%= f.text_field :message, style: "margin-right: 10px; width: 70%;" %>
+      <%= f.hidden_field :room_id %>
+      <%= f.submit "送信" %>
+    <% end %>
+  </div>
+</div>
