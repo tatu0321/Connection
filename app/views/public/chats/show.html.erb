@@ -1,0 +1,27 @@
+<div style="display: flex; height: 100vh;">
+  <!-- 左側のユーザー情報 -->
+  <div style="width: 30%; border-right: 1px solid #ddd; padding: 20px;">
+    <%= render 'public/users/user_info', user: @user %>
+  </div>
+
+  <!-- 右側のチャットエリア -->
+  <div style="width: 70%; padding: 20px;">
+    <h2 id="room" data-room="<%= @room.id %>" data-user="<%= current_user.id %>"><%= @user.name %> さんとのチャット</h2>
+
+    <div class="message" style="width: 100%; max-width: 950px;">
+      <% @chats.each do |chat| %>
+        <% if chat.user_id == current_user.id %>
+          <p style="text-align: right;"><%= chat.message %></p>
+        <% else %>
+          <p style="text-align: left;"><%= chat.message %></p>
+        <% end %>
+      <% end %>
+    </div>
+
+    <%= form_with model: @chat, data: {remote: true}, style: "margin-top: 20px;" do |f| %>
+      <%= f.text_field :message, style: "margin-right: 10px; width: 70%;" %>
+      <%= f.hidden_field :room_id %>
+      <%= f.submit "送信" %>
+    <% end %>
+  </div>
+</div>
